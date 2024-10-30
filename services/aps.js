@@ -1,11 +1,9 @@
-const { SdkManagerBuilder } = require('@aps_sdk/autodesk-sdkmanager');
 const { AuthenticationClient, Scopes } = require('@aps_sdk/authentication');
 const { OssClient, Region, PolicyKey } = require('@aps_sdk/oss');
 const { ModelDerivativeClient, View, OutputType } = require('@aps_sdk/model-derivative');
 const { APS_CLIENT_ID, APS_CLIENT_SECRET, APS_BUCKET } = require('../config.js');
 
-const sdk = SdkManagerBuilder.create().build();
-const authenticationClient = new AuthenticationClient(sdk);
+const authenticationClient = new AuthenticationClient();
 const ossClient = new OssClient();
 const modelDerivativeClient = new ModelDerivativeClient();
 
