@@ -18,7 +18,7 @@ export function initViewer(container) {
     return new Promise(function (resolve, reject) {
         Autodesk.Viewing.Initializer({ env: 'AutodeskProduction', getAccessToken }, function () {
             const config = {
-                extensions: ['Autodesk.DocumentBrowser']
+                extensions: ['Autodesk.DocumentBrowser','Autodesk.AEC.Minimap3DExtension']
             };
             const viewer = new Autodesk.Viewing.GuiViewer3D(container, config);
             viewer.start();
@@ -31,7 +31,8 @@ export function initViewer(container) {
 export function loadModel(viewer, urn) {
     return new Promise(function (resolve, reject) {
         function onDocumentLoadSuccess(doc) {
-            resolve(viewer.loadDocumentNode(doc, doc.getRoot().getDefaultGeometry()));
+          doc.downloadAecModelData( () => viewer.loadDocumentNode(doc, doc.getRoot().getDefaultGeometry()));
+            //resolve(viewer.loadDocumentNode(doc, doc.getRoot().getDefaultGeometry()));
         }
         function onDocumentLoadFailure(code, message, errors) {
             reject({ code, message, errors });
